@@ -1,0 +1,12 @@
+v = VideoReader('2_bolas.avi');
+
+while hasFrame(v)
+frame = readFrame(v);
+img = rgb2gray(frame);
+
+avgInten=mean2(img);
+
+bw=im2bw(img,avgInten);
+
+imshow(img)
+end
