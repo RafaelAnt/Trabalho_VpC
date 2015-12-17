@@ -29,5 +29,7 @@ Motion Analysis
 
 Ver:
 http://www.mathworks.com/help/vision/examples/motion-based-multiple-object-tracking.html
+http://www.mathworks.com/products/computer-vision/
+Ver Slides object tracking na BB...
 
 %}
