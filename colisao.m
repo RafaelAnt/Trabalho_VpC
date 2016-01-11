@@ -1,6 +1,6 @@
 clear
 
-v = VideoReader('bees.mp4');
+v = VideoReader('vids/car.avi');
 
 while hasFrame(v)
 frame = readFrame(v);
@@ -31,5 +31,8 @@ Ver:
 http://www.mathworks.com/help/vision/examples/motion-based-multiple-object-tracking.html
 http://www.mathworks.com/products/computer-vision/
 Ver Slides object tracking na BB...
+
+Ajuda MatLab:
+helpview(fullfile(docroot,'toolbox','matlab','matlab_prog','matlab_prog.map'),'nested_functions')
 
 %}
