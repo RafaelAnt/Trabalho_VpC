@@ -3,8 +3,8 @@ function obj = setupObjects()
     % Create objects for reading a video from a file, drawing the tracked objects in each frame, and playing the video.
 
     % Create a video file reader.
-    % teste_rafa.mp4
-    obj.reader = vision.VideoFileReader('vids/Translating_50ms.avi');
+    % Translating_50ms.avi
+    obj.reader = vision.VideoFileReader('vids/approaching_flow_field.avi');
 
     % Create two video players, one to display the video,
     % and one to display the foreground mask.

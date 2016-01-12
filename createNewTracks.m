@@ -1,4 +1,4 @@
-function [retID] = createNewTracks(unassignedDetections,centroids,bboxes,nextId,tracks)
+function [retID,tracks] = createNewTracks(unassignedDetections,centroids,bboxes,nextId,tracks)
     centroids = centroids(unassignedDetections, :);
     bboxes = bboxes(unassignedDetections, :);
 

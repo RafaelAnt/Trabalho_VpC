@@ -18,13 +18,13 @@ nextId = 1; % ID of the next track
 while ~isDone(obj.reader)
     frame = obj.reader.step();                                              %Read a new frame.
     [centroids, bboxes, mask] = detectObjects(obj,frame);
-    predictNewLocationsOfTracks(tracks);
+    tracks = predictNewLocationsOfTracks(tracks);
     [assignments, unassignedTracks, unassignedDetections] = detectionToTrackAssignment(tracks,centroids);
 
-    updateAssignedTracks(assignments);
-    updateUnassignedTracks(unassignedTracks);
-    deleteLostTracks(tracks);
-    nextId = createNewTracks(unassignedDetections,centroids,bboxes,nextId,tracks);
+    tracks= updateAssignedTracks(assignments,centroids,bboxes,tracks);
+    tracks = updateUnassignedTracks(unassignedTracks,tracks);
+    tracks = deleteLostTracks(tracks);
+    [nextId,tracks] = createNewTracks(unassignedDetections,centroids,bboxes,nextId,tracks);
 
     displayTrackingResults(frame,mask,tracks,obj,centroids);
 end
