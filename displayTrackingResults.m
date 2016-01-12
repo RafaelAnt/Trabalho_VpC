@@ -5,7 +5,7 @@ function displayTrackingResults(frame,mask,tracks,obj,centroids)
 
     minVisibleCount = 8;
     if ~isempty(tracks)
-
+    disp('Entrei no 1º if')
         % Noisy detections tend to result in short-lived tracks.
         % Only display tracks that have been visible for more than a minimum number of frames.
         reliableTrackInds = [tracks(:).totalVisibleCount] > minVisibleCount;
@@ -36,14 +36,10 @@ function displayTrackingResults(frame,mask,tracks,obj,centroids)
     end
     
     
-    % TESTES DO RAFA, APAGAR! Tentativa de desenhar o centro do bixo
-    frame (50,50) = 0;
-    frame (51,50) = 0;
-    frame (49,50) = 0;
-    frame (50,51) = 0;
-    frame (50,49) = 0;
-    % frame(centroids(1),centroids(2)) = [1,0,0];
-    
+    % TESTES DO RAFA
+    mask=drawCentroid(mask,centroids,7,0,0,255);
+    %{
+    %}
     
     
     % Display the mask and the frame.

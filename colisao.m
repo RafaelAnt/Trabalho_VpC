@@ -1,8 +1,6 @@
 clear;
 
-
-% Create System objects used for reading video, detecting moving objects,
-% and displaying the results.
+% Create System objects used for reading video
 obj = setupObjects();
 
 % Create an empty array of tracks.
