@@ -35,17 +35,19 @@ function displayTrackingResults(frame,mask,tracks,obj,centroids)
         end
     end
     
-    
+
     % TESTES DO RAFA
     % Draw Centroid recebe uma imagem, coordenadas, tamanho a desenhar (m x n), vermelho, verde, azul.
-    % Pode causar erros na função abaixo
-    mask=drawCentroid(mask,centroids,7,0,0,255);
-    frame=drawCentroid(frame,centroids,7,0,0,255);
-    %{
-    %}
-    
-    
+    try
+        mask2=drawCentroid(mask,centroids,7,0,0,255);
+        frame2=drawCentroid(frame,centroids,7,0,0,255);
+        obj.maskPlayer.step(mask2);
+        obj.videoPlayer.step(frame2);
+    catch
+        obj.maskPlayer.step(mask);
+        obj.videoPlayer.step(frame);
+    end
+
     % Display the mask and the frame.
-    obj.maskPlayer.step(mask);
-    obj.videoPlayer.step(frame);
+   
 end
