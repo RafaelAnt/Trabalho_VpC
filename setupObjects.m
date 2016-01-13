@@ -4,7 +4,7 @@ function obj = setupObjects()
 
     % Create a video file reader.
     % Translating_50ms.avi
-    obj.reader = vision.VideoFileReader('vids/approaching_flow_field.avi');
+    obj.reader = vision.VideoFileReader('vids/Approaching_50ms.avi');
 
     % Create two video players, one to display the video,
     % and one to display the foreground mask.
