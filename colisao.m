@@ -79,7 +79,10 @@ while ~isDone(obj.reader)
             if oldMeanX~=-1
                 
                 if meanX>oldMeanX+(stepW/5)
-                    disp('Traslação para a direita')
+                    disp('Traslação para a Esquerda')
+                end
+                if meanX<oldMeanX-(stepW/5)
+                    disp('Traslação para a Esquerda')
                 end
             end
             i=1;
