@@ -1,6 +1,6 @@
 function [ out ] = drawCentroid( image,centroid, step, red, green, blue )
 
-[width,height]=size(image);
+[height,width,~]=size(image);
 out=image;
 
 % se tiver elementos

@@ -1,7 +1,8 @@
 clear;
+import com.mathworks.services.*;
 
 % Create System objects used for reading video
-obj = setupObjects();
+obj = setupObjects('vids/2_bolas.avi');
 
 % Create an empty array of tracks.
 tracks = struct(...
@@ -13,7 +14,20 @@ tracks = struct(...
     'consecutiveInvisibleCount', {});
     
 nextId = 1; % ID of the next track
-
+i=1;
+frame = obj.reader.step();  
+[height,width,~]=size(frame);
+stepW=round(width*0.05);
+stepH=round(height*0.05);
+centralX=round(width/2);
+centralY=round(height/2);
+oldMeanX=-1;
+oldArea=-1;
+a=0;
+oldAreas=[];
+oldPositionX=[];
+meanArea=-1;
+meanX=-1;
 % Detect moving objects, and track them across video frames.
 while ~isDone(obj.reader)
     frame = obj.reader.step();                                              %Read a new frame.
@@ -26,7 +40,57 @@ while ~isDone(obj.reader)
     tracks = deleteLostTracks(tracks);
     [nextId,tracks] = createNewTracks(unassignedDetections,centroids,bboxes,nextId,tracks);
 
-    displayTrackingResults(frame,mask,tracks,obj,centroids);
+    bboxes = displayTrackingResults(frame,mask,tracks,obj,centroids);
+    
+    %Detetar Colisões:
+    
+    if ~isempty(centroids) && ~isempty(bboxes)
+        
+        n=numel(centroids); 
+        y = round(centroids(n));
+        n = n-1;
+        x = round(centroids(n));
+        n = n-1;
+
+        a=sizebb(bboxes);
+        oldAreas(i)=a;
+        oldPositionX(i)=x;
+        if i==3
+            %oldAreas
+            meanArea = mean2(oldAreas);
+            if oldArea~=-1
+                if meanArea>oldArea+stepW^2
+                        if meanArea>width*height*0.8
+                            if x>centralX-stepW && x<centralX+stepW && y>centralY-stepH && y<centralY+stepH 
+                                disp('Colisão Detetada')
+                                %beep
+                            end
+                        else
+                            disp('Objeto em Aproximação')
+                        end
+                   
+                else if meanArea<oldArea-stepW %VER MELHOR
+                    disp('Objeto a Afastar-se')
+
+                    end
+                end
+            end
+            meanX = mean2(oldPositionX);
+            if oldMeanX~=-1
+                
+                if meanX>oldMeanX+(stepW/5)
+                    disp('Traslação para a direita')
+                end
+            end
+            i=1;
+        else     
+            i=i+1;
+        end
+        oldMeanX=meanX;
+        oldy=y;
+        oldArea=meanArea;
+    end
+    
 end
 
 %{ 

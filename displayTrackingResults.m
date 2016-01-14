@@ -1,11 +1,10 @@
-function displayTrackingResults(frame,mask,tracks,obj,centroids)
+function [bboxes] = displayTrackingResults(frame,mask,tracks,obj,centroids)
     % Convert the frame and the mask to uint8 RGB.
     frame = im2uint8(frame);
     mask = uint8(repmat(mask, [1, 1, 3])) .* 255;
-
+    bboxes=[];
     minVisibleCount = 8;
     if ~isempty(tracks)
-    %disp('Entrei no 1º if') - teste do rafa
         % Noisy detections tend to result in short-lived tracks.
         % Only display tracks that have been visible for more than a minimum number of frames.
         reliableTrackInds = [tracks(:).totalVisibleCount] > minVisibleCount;
@@ -47,7 +46,9 @@ function displayTrackingResults(frame,mask,tracks,obj,centroids)
         obj.maskPlayer.step(mask);
         obj.videoPlayer.step(frame);
     end
-
+    
+    
+    
     % Display the mask and the frame.
    
 end

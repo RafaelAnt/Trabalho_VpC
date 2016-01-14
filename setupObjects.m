@@ -1,10 +1,10 @@
-function obj = setupObjects()
+function obj = setupObjects(video)
     % Initialize Video I/O
     % Create objects for reading a video from a file, drawing the tracked objects in each frame, and playing the video.
 
     % Create a video file reader.
     % Translating_50ms.avi
-    obj.reader = vision.VideoFileReader('vids/Approaching_50ms.avi');
+    obj.reader = vision.VideoFileReader(video);
 
     % Create two video players, one to display the video,
     % and one to display the foreground mask.
