@@ -1,5 +1,4 @@
 clear;
-import com.mathworks.services.*;
 
 % Create System objects used for reading video
 obj = setupObjects('vids/2_bolas.avi');
@@ -47,39 +46,52 @@ while ~isDone(obj.reader)
     if ~isempty(centroids) && ~isempty(bboxes)
         
         n=numel(centroids); 
+        % Se detetar mais do que um objeto só dá informação para o primeiro
+        if n>2 
+            %disp('Mais de um Objeto Detetado');
+            centroids2=centroids([3:4 1:2]);
+            centroids=centroids2;
+            
+        end
+        if numel(bboxes)>4
+            bboxes2=bboxes([5:8 1:4]);
+            bboxes=bboxes2;
+        end
         y = round(centroids(n));
         n = n-1;
         x = round(centroids(n));
         n = n-1;
-
+        
         a=sizebb(bboxes);
         oldAreas(i)=a;
         oldPositionX(i)=x;
-        if i==3
+        if i==4
             %oldAreas
             meanArea = mean2(oldAreas);
             if oldArea~=-1
-                if meanArea>oldArea+stepW^2
+                if meanArea>oldArea+stepW
                         if meanArea>width*height*0.8
                             if x>centralX-stepW && x<centralX+stepW && y>centralY-stepH && y<centralY+stepH 
                                 disp('Colisão Detetada')
                                 %beep
                             end
                         else
-                            disp('Objeto em Aproximação')
+                            if onBorder(bboxes,width,height)==0
+                                disp('Objeto em Aproximação')
+                            end
                         end
                    
-                else if meanArea<oldArea-stepW %VER MELHOR
+                else if meanArea<oldArea-stepW && onBorder(bboxes,width,height)==0 %VER MELHOR
                     disp('Objeto a Afastar-se')
 
                     end
                 end
             end
             meanX = mean2(oldPositionX);
-            if oldMeanX~=-1
+            if oldMeanX~=-1&& onBorder(bboxes,width,height)==0
                 
-                if meanX>oldMeanX+(stepW/5)
-                    disp('Traslação para a Esquerda')
+                if meanX>oldMeanX+(stepW/5) 
+                    disp('Traslação para a Direita')
                 end
                 if meanX<oldMeanX-(stepW/5)
                     disp('Traslação para a Esquerda')

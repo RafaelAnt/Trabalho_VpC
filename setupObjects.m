@@ -1,3 +1,4 @@
+
 function obj = setupObjects(video)
     % Initialize Video I/O
     % Create objects for reading a video from a file, drawing the tracked objects in each frame, and playing the video.
