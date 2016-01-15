@@ -1,7 +1,7 @@
 clear;
 
 % Create System objects used for reading video
-obj = setupObjects('vids/2_bolas.avi');
+obj = setupObjects('vids/car2.avi');
 
 % Create an empty array of tracks.
 tracks = struct(...
@@ -47,28 +47,25 @@ while ~isDone(obj.reader)
         
         n=numel(centroids); 
         % Se detetar mais do que um objeto só dá informação para o primeiro
-        if n>2 
+        if n>2
             %disp('Mais de um Objeto Detetado');
-            centroids2=centroids([3:4 1:2]);
+            centroids2([1 2])=centroids([end-1 end]);
             centroids=centroids2;
-            
         end
         if numel(bboxes)>4
-            bboxes2=bboxes([5:8 1:4]);
+            bboxes2([1 2 3 4])=bboxes([end-3 end-2 end-1 end]);
             bboxes=bboxes2;
         end
-        y = round(centroids(n));
-        n = n-1;
-        x = round(centroids(n));
-        n = n-1;
-        
+        y = round(centroids(2));
+        x = round(centroids(1));
+
         a=sizebb(bboxes);
         oldAreas(i)=a;
         oldPositionX(i)=x;
         if i==4
             %oldAreas
             meanArea = mean2(oldAreas);
-            if oldArea~=-1
+            if oldArea~=-1 && onBorder(bboxes,width,height)==0
                 if meanArea>oldArea+stepW
                         if meanArea>width*height*0.8
                             if x>centralX-stepW && x<centralX+stepW && y>centralY-stepH && y<centralY+stepH 
@@ -81,8 +78,8 @@ while ~isDone(obj.reader)
                             end
                         end
                    
-                else if meanArea<oldArea-stepW && onBorder(bboxes,width,height)==0 %VER MELHOR
-                    disp('Objeto a Afastar-se')
+                else if meanArea<oldArea-stepW  %VER MELHOR
+                    disp('Objeto em Afastastamento')
 
                     end
                 end
