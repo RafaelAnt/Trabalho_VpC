@@ -6,7 +6,8 @@ function [tracks]=updateAssignedTracks(assignments,centroids,bboxes,tracks)
         centroid = centroids(detectionIdx, :);
         bbox = bboxes(detectionIdx, :);
 
-        % Correct the estimate of the object's location using the new detection.
+        % Correct the estimate of the object's location using the new 
+        % detection.
         correct(tracks(trackIdx).kalmanFilter, centroid);
 
         % Replace predicted bounding box with detected bounding box.
@@ -16,7 +17,8 @@ function [tracks]=updateAssignedTracks(assignments,centroids,bboxes,tracks)
         tracks(trackIdx).age = tracks(trackIdx).age + 1;
 
         % Update visibility.
-        tracks(trackIdx).totalVisibleCount = tracks(trackIdx).totalVisibleCount + 1;
+        tracks(trackIdx).totalVisibleCount = ...
+            tracks(trackIdx).totalVisibleCount + 1;
         tracks(trackIdx).consecutiveInvisibleCount = 0;
     end
 end

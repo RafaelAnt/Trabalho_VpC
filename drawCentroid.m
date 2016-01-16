@@ -3,7 +3,7 @@ function [ out ] = drawCentroid( image,centroid, step, red, green, blue )
 [height,width,~]=size(image);
 out=image;
 
-% se tiver elementos
+% If has elements
 if ~isempty(centroid) 
     n=numel(centroid); 
     while n>1
@@ -17,7 +17,7 @@ if ~isempty(centroid)
             return
         end
       
-        %Desenha barra vertical
+        %Draw Vertical Bar
         i= x-step;
         while i<x+step
             out(y,i,1)=red;
@@ -26,7 +26,7 @@ if ~isempty(centroid)
             i=i+1;
         end
         
-        %Desenha barra horizontal
+        %Draw Horizontal Bar
         i = y-step;
         while i< y+step
             out(i,x,1)=red;
