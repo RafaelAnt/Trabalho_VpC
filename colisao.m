@@ -11,10 +11,11 @@ tracks = struct(...
     'age', {}, ...
     'totalVisibleCount', {}, ...
     'consecutiveInvisibleCount', {});
-    
+
+frame = obj.reader.step();  
+
 nextId = 1; % ID of the next track
 i=1;
-frame = obj.reader.step();  
 [height,width,~]=size(frame);
 stepW=round(width*0.05);
 stepH=round(height*0.05);
