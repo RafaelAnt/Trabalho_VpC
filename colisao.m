@@ -1,7 +1,7 @@
 clear;
 
 % Create System objects used for reading video
-obj = setupObjects('vids/approaching_scattered.avi');
+obj = setupObjects('vids/Translating_Receding_25ms.avi');
 
 % Create an empty array of tracks.
 tracks = struct(...
