@@ -1,7 +1,10 @@
+function [ ] = fcolisao(  )
+%FCOLISAO Summary of this function goes here
+%   Detailed explanation goes here
 clear;
 
 % Create System objects used for reading video
-obj = setupObjects('vids/Uniformly_Approaching.avi');
+obj = setupObjects('vids/S_N.avi');
 
 % Create an empty array of tracks.
 tracks = struct(...
@@ -71,14 +74,13 @@ while ~isDone(obj.reader)
         a=sizebb(bboxes);
         oldAreas(i)=a;
         oldPositionX(i)=x;
-        if i==4
+        if i==2
             meanArea = mean2(oldAreas);
             if oldArea~=-1 && onBorder(bboxes,width,height)==0
                 if meanArea>oldArea+stepW
                         if meanArea>width*height*0.8
                             if x>centralX-stepW && x<centralX+stepW && y>centralY-stepH && y<centralY+stepH 
                                 disp('Collision Detected!')
-                                beep
                             end
                         else
                             if onBorder(bboxes,width,height)==0
@@ -110,5 +112,7 @@ while ~isDone(obj.reader)
         oldy=y;
         oldArea=meanArea;
     end
-    
 end
+
+end
+
