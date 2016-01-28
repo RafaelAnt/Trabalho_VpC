@@ -1,7 +1,7 @@
 clear;
 
 % Create System objects used for reading video
-obj = setupObjects('vids/Uniformly_Approaching.avi');
+obj = setupObjects('vids/Translating_Approaching_50ms.avi');
 
 % Create an empty array of tracks.
 tracks = struct(...
@@ -13,6 +13,7 @@ tracks = struct(...
     'consecutiveInvisibleCount', {});
 
 % Variable Initialization
+nframes = 0;
 frame = obj.reader.step();  
 nextId = 1; 
 i=1;
@@ -29,8 +30,10 @@ oldPositionX=[];
 meanArea=-1;
 meanX=-1;
 
+tStart = tic;
 % Detect moving objects, and track them across video frames.
 while ~isDone(obj.reader)
+    nframes = nframes + 1;
     %Read a new frame.
     frame = obj.reader.step();                                              
     [centroids, bboxes, mask] = detectObjects(obj,frame);
@@ -75,7 +78,7 @@ while ~isDone(obj.reader)
             meanArea = mean2(oldAreas);
             if oldArea~=-1 && onBorder(bboxes,width,height)==0
                 if meanArea>oldArea+stepW
-                        if meanArea>width*height*0.8
+                        if meanArea>width*height*0.70
                             if x>centralX-stepW && x<centralX+stepW && y>centralY-stepH && y<centralY+stepH 
                                 disp('Collision Detected!')
                                 beep
@@ -110,5 +113,5 @@ while ~isDone(obj.reader)
         oldy=y;
         oldArea=meanArea;
     end
-    
 end
+tElapsed = toc(tStart) / nframes
