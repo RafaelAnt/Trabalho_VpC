@@ -1,5 +1,5 @@
 
-function obj = setupObjects(video)
+function obj = setupObjects(video,t)
     % Initialize Video I/O
     % Create objects for reading a video from a file, drawing the tracked 
     % objects in each frame, and playing the video.
@@ -23,7 +23,7 @@ function obj = setupObjects(video)
     obj.detector = vision.ForegroundDetector(...
         'NumGaussians', 3, ...
         'NumTrainingFrames', 40, ...
-        'MinimumBackgroundRatio', 0.7);
+        'MinimumBackgroundRatio', t);
 
     % Connected groups of foreground pixels are likely to correspond to 
     % moving objects. The blob analysis System object is used to find such
